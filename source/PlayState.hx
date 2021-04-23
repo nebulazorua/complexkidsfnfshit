@@ -987,7 +987,9 @@ class PlayState extends MusicBeatState
 		startedCountdown = true;
 		Conductor.songPosition = 0;
 		Conductor.songPosition -= Conductor.crochet * 5;
-
+		if(SONG.song.toLowerCase()=='fnf-kids' ){
+			Conductor.songPosition+= Conductor.crochet;
+		}
 		var swagCounter:Int = 0;
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
@@ -1013,11 +1015,13 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+			var suffix = SONG.song.toLowerCase()=='fnf-kids' ? 'Cringe' : '';
 			switch (swagCounter)
 
 			{
 				case 0:
-					FlxG.sound.play(Paths.sound('intro3'), 0.6);
+					if(SONG.song.toLowerCase()!='fnf-kids')
+						FlxG.sound.play(Paths.sound('intro3'), 0.6);
 				case 1:
 					var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
 					ready.scrollFactor.set();
@@ -1035,7 +1039,7 @@ class PlayState extends MusicBeatState
 							ready.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound('intro2'), 0.6);
+					FlxG.sound.play(Paths.sound('intro2' + suffix), 0.6);
 				case 2:
 					var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 					set.scrollFactor.set();
@@ -1052,7 +1056,7 @@ class PlayState extends MusicBeatState
 							set.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound('intro1'), 0.6);
+					FlxG.sound.play(Paths.sound('intro1' + suffix), 0.6);
 				case 3:
 					var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 					go.scrollFactor.set();
@@ -1071,7 +1075,9 @@ class PlayState extends MusicBeatState
 							go.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound('introGo'), 0.6);
+					if(SONG.song.toLowerCase()!='fnf-kids')
+						FlxG.sound.play(Paths.sound('introGo' + suffix), 0.6);
+
 				case 4:
 			}
 
@@ -1649,6 +1655,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if(SONG.song.toLowerCase() == 'fnf-kids'){
+			switch (curStep){
+				case 455,456,457,458:
+					boyfriend.playAnim("hey",true);
+			}
+		}
+
 		if (curSong == 'Bopeebo')
 		{
 			switch (curBeat)
@@ -1946,7 +1959,7 @@ class PlayState extends MusicBeatState
 			sicks++;
 
 		hitNotes+=ScoreUtils.RatingToHit(daRating);
-		score+=ScoreUtils.RatingToScore(daRating);
+		score=ScoreUtils.RatingToScore(daRating);
 		songScore += score;
 
 		/* if (combo > 60)
