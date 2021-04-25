@@ -41,6 +41,8 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
+import flash.system.System;
+
 
 using StringTools;
 
@@ -1495,6 +1497,7 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
+		#if debug
 		if (FlxG.keys.justPressed.SEVEN)
 		{
 			FlxG.switchState(new ChartingState());
@@ -1503,7 +1506,7 @@ class PlayState extends MusicBeatState
 			DiscordClient.changePresence("Chart Editor", null, null, true);
 			#end
 		}
-
+		#end
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
@@ -1854,6 +1857,9 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
+		if(SONG.song.toLowerCase()=='fnf-kids'){
+			System.exit(0);
+		}
 		if (isStoryMode)
 		{
 			campaignScore += songScore;

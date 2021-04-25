@@ -26,13 +26,14 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate', 'options'];
+	var optionShit:Array<String> = ['freeplay', 'options'];
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
+	var icon:HealthIcon;
 
 	override function create()
 	{
@@ -89,6 +90,12 @@ class MainMenuState extends MusicBeatState
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
+			if(optionShit[i]=='freeplay'){
+				icon = new HealthIcon("bf");
+				icon.sprTracker = menuItem;
+				// using a FlxGroup is too much fuss!
+				add(icon);
+			};
 		}
 
 		FlxG.camera.follow(camFollow, null, 0.06);
@@ -169,9 +176,12 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new StoryMenuState());
 										trace("Story Menu Selected");
 									case 'freeplay':
-										FlxG.switchState(new FreeplayState());
+										PlayState.SONG = Song.loadFromJson("Fnf-kids", "fnf-kids");
+										PlayState.isStoryMode = false;
+										PlayState.storyDifficulty = 1;
 
-										trace("Freeplay Menu Selected");
+										PlayState.storyWeek = -1;
+										LoadingState.loadAndSwitchState(new PlayState());
 
 									case 'options':
 										FlxG.switchState(new OptionsMenu());

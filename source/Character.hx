@@ -623,8 +623,8 @@ class Character extends FlxSprite
 						playAnim('danceRight');
 					else
 						playAnim('danceLeft');
-					case 'gf-cursed':
-						playAnim('idle',true);
+				case 'gf-cursed':
+					playAnim('idle',true);
 				default:
 					playAnim('idle');
 			}
