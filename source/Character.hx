@@ -61,6 +61,16 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
+				case 'gf-cursed':
+					// GIRLFRIEND CODE
+					tex = Paths.getSparrowAtlas('GF_assets');
+					frames = tex;
+					animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+					animation.addByIndices('idle', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+					addOffset('sad', -2, -2);
+					addOffset('idle', -2, -2);
+
+					playAnim('idle');
 
 			case 'gf-christmas':
 				tex = Paths.getSparrowAtlas('christmas/gfChristmas','week5');
@@ -613,6 +623,8 @@ class Character extends FlxSprite
 						playAnim('danceRight');
 					else
 						playAnim('danceLeft');
+					case 'gf-cursed':
+						playAnim('idle',true);
 				default:
 					playAnim('idle');
 			}

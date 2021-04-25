@@ -571,6 +571,8 @@ class PlayState extends MusicBeatState
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
+											if(SONG.song.toLowerCase()=='fnf-kids')
+												defaultCamZoom = 1.1;
 		                  curStage = 'stage';
 		                  var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
 		                  bg.antialiasing = true;
@@ -613,6 +615,8 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'limo')
 			gfVersion = 'gf-car';
+		else if(SONG.song.toLowerCase()=='fnf-kids')
+		 	gfVersion = 'gf-cursed';
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -696,6 +700,12 @@ class PlayState extends MusicBeatState
 				gf.x += 180;
 				gf.y += 300;
 		}
+
+		if(SONG.song.toLowerCase()=='fnf-kids'){
+			camPos.set(boyfriend.getGraphicMidpoint().x + 300,boyfriend.getGraphicMidpoint().y);
+			dad.visible=false;
+			boyfriend.x -= 200;
+		};
 
 		add(gf);
 
@@ -1570,27 +1580,31 @@ class PlayState extends MusicBeatState
 
 			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
-				camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
+				if(SONG.song.toLowerCase()=='fnf-kids'){
+					camFollow.setPosition(boyfriend.getMidpoint().x,boyfriend.getMidpoint().y-100);
+				}else{
+					camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+					// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
-				switch (dad.curCharacter)
-				{
-					case 'mom':
-						camFollow.y = dad.getMidpoint().y;
-					case 'senpai':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
-					case 'senpai-angry':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
-				}
+					switch (dad.curCharacter)
+					{
+						case 'mom':
+							camFollow.y = dad.getMidpoint().y;
+						case 'senpai':
+							camFollow.y = dad.getMidpoint().y - 430;
+							camFollow.x = dad.getMidpoint().x - 100;
+						case 'senpai-angry':
+							camFollow.y = dad.getMidpoint().y - 430;
+							camFollow.x = dad.getMidpoint().x - 100;
+					}
 
-				if (dad.curCharacter == 'mom')
-					vocals.volume = 1;
+					if (dad.curCharacter == 'mom')
+						vocals.volume = 1;
 
-				if (SONG.song.toLowerCase() == 'tutorial')
-				{
-					tweenCamIn();
+					if (SONG.song.toLowerCase() == 'tutorial')
+					{
+						tweenCamIn();
+					}
 				}
 			}
 
@@ -1611,6 +1625,9 @@ class PlayState extends MusicBeatState
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
 				}
+
+				if(SONG.song.toLowerCase()=='fnf-kids' )
+					camFollow.setPosition(boyfriend.getMidpoint().x,boyfriend.getMidpoint().y-100);
 
 				if (SONG.song.toLowerCase() == 'tutorial')
 				{
